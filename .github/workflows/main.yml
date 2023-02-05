@@ -218,8 +218,8 @@ jobs:
       matrix:
         config:
           - artefact: qt-5.15.8-lts-lgpl-src.tar.gz
-          - artefact: qt-5.15.8-lts-lgpl-cpp17-ubuntu-18.04.tar.gz
-          - artefact: qt-5.15.8-lts-lgpl-cpp17-ubuntu-22.04.tar.gz
+          - artefact: qt-5.15.8-lts-lgpl-cpp17-ubuntu-18.04-x64.tar.gz
+          - artefact: qt-5.15.8-lts-lgpl-cpp17-ubuntu-22.04-x64.tar.gz
     needs: release
 
     steps:
