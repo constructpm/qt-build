@@ -16,6 +16,12 @@ name: CI
 # licence (the Qt website reports it isn't, although this 5.15.8 includes an
 # LGPL licence).
 
+env:
+  # The version of QT that should get built
+  # This will need to match the tags used in the qt/qt5 repo minus the "v"
+  # For example this version will use source from qt/qt5 tag "v5.15.8-lts-lgpl"
+  qt_version: "5.15.8-lts-lgpl"
+
 on:
   pull_request:
     branches: [main]
@@ -29,20 +35,15 @@ on:
 
 jobs:
   tar-src:
-    name: "Tar ${{ matrix.config.qt }} source"
+    name: "Tar qt source"
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        config:
-          - qt: "5.15.8-lts-lgpl"
     steps:
       - id: config
-        run: echo "artefact_name=qt-${{ matrix.config.qt }}-src.tar.gz" >> $GITHUB_OUTPUT
+        run: echo "artefact_name=qt-${{ env.qt_version }}-src.tar.gz" >> $GITHUB_OUTPUT
       - uses: actions/checkout@v3
         with:
           repository: qt/qt5
-          ref: v${{ matrix.config.qt }}
+          ref: v${{ env.qt_version }}
           submodules: true
           path: qt-src
       - name: Archive
@@ -63,15 +64,13 @@ jobs:
           - os: "ubuntu-18.04"
             # doesn't matter what we ask for, this is what we get...
             std: "17"
-            qt: "5.15.8-lts-lgpl"
           - os: "ubuntu-22.04"
             std: "17"
-            qt: "5.15.8-lts-lgpl"
 
     steps:
       - id: config
         run: |
-          artefact_name="qt-${{ matrix.config.qt }}-cpp${{ matrix.config.std }}-${{ matrix.config.os }}-x64.tar.gz"
+          artefact_name="qt-${{ env.qt_version }}-cpp${{ matrix.config.std }}-${{ matrix.config.os }}-x64.tar.gz"
           echo "artefact_name=$artefact_name" >> $GITHUB_OUTPUT
       - name: Install dependencies
         run: |
@@ -131,7 +130,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           repository: qt/qt5
-          ref: v${{ matrix.config.qt }}
+          ref: v${{ env.qt_version }}
           submodules: true
       - name: Configure
         run: |
@@ -217,25 +216,28 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - artefact: qt-5.15.8-lts-lgpl-src.tar.gz
-          - artefact: qt-5.15.8-lts-lgpl-cpp17-ubuntu-18.04-x64.tar.gz
-          - artefact: qt-5.15.8-lts-lgpl-cpp17-ubuntu-22.04-x64.tar.gz
+          - artefact: src
+          - artefact: cpp17-ubuntu-18.04-x64
+          - artefact: cpp17-ubuntu-22.04-x64
     needs: release
 
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v3
+        env:
+          artefact_name: qt-${{ env.qt_version }}-${{ matrix.config.artefact }}.tar.gz 
         with:
-          name: "${{ matrix.config.artefact }}"
+          name: "${{ env.artefact_name }}"
           path: ./
       - name: Upload to Release
         uses: actions/upload-release-asset@v1.0.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          artefact_name: qt-${{ env.qt_version }}-${{ matrix.config.artefact }}.tar.gz 
         with:
           upload_url: ${{ needs.release.outputs.upload_url }}
-          asset_path: "./${{ matrix.config.artefact }}"
-          asset_name: "${{ matrix.config.artefact }}"
+          asset_path: "./${{ env.artefact_name }}"
+          asset_name: "${{ env.artefact_name }}"
           asset_content_type: application/x-gtar
 
 
