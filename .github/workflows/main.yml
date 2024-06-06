@@ -61,9 +61,6 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - os: "ubuntu-18.04"
-            # doesn't matter what we ask for, this is what we get...
-            std: "17"
           - os: "ubuntu-22.04"
             std: "17"
 
@@ -217,7 +214,6 @@ jobs:
       matrix:
         config:
           - artefact: src
-          - artefact: cpp17-ubuntu-18.04-x64
           - artefact: cpp17-ubuntu-22.04-x64
     needs: release
 
