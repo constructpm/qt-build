@@ -40,7 +40,7 @@ jobs:
     steps:
       - id: config
         run: echo "artefact_name=qt-${{ env.qt_version }}-src.tar.gz" >> $GITHUB_OUTPUT
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           repository: qt/qt5
           ref: v${{ env.qt_version }}
@@ -49,7 +49,7 @@ jobs:
       - name: Archive
         run: tar --create --xz --file "${{ steps.config.outputs.artefact_name }}" --exclude-vcs qt-src
       - name: Upload
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: "${{ steps.config.outputs.artefact_name }}"
           path: "${{ github.workspace }}/${{ steps.config.outputs.artefact_name }}"
@@ -127,7 +127,7 @@ jobs:
             libxslt-dev \
             libxss-dev \
             libxtst-dev \
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           repository: qt/qt5
           ref: v${{ env.qt_version }}
@@ -178,7 +178,7 @@ jobs:
         working-directory: ${{ github.workspace }}/opt
         run: tar cJfv "${{ steps.config.outputs.artefact_name }}" qt5
       - name: Upload
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: "${{ steps.config.outputs.artefact_name }}"
           path: "${{ github.workspace }}/opt/${{ steps.config.outputs.artefact_name }}"
@@ -223,7 +223,7 @@ jobs:
 
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         env:
           artefact_name: qt-${{ env.qt_version }}-${{ matrix.config.artefact }}.tar.gz 
         with:
