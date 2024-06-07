@@ -14,8 +14,8 @@ So you need to build a specific version of Qt. Here's how:
     1. check the action suceeded
     2. check the artefacts it built are correct/work for you
     3. keep tweaking `main.yml` until the action builds the version you want successfully
-5. once you have a successful build, tag the commit with the Qt version number to trigger a release build (`git tag v6.7.1 && git push --tags`)
-6. merge your PR (or rebase, up to you)
+5. once you have a successful build, merge/rebase your PR into `main`
+6. Then tag the latest commit on `main` with the Qt version number to trigger a release build (`git tag v6.7.1 && git push --tags`)
 
 Now to use the library you have built do something like:
 
@@ -44,6 +44,3 @@ To trigger a build just create a PR and push to it. Every push will build Qt and
 
 To trigger a release just push a tag that starts with `v`. Ideally push a tag matching the version of Qt you want to build a release for. The release will use the tag you provide to both tag and name the release (so tag `v1.2.3` will produce `Release v1.2.3` with tag `v1.2.3`).
 Simply pushing a tag will trigger the build process (on any branch), and then will create a Release using the result of that build. That release can be used via the `curl` process listed above.
-
-
-
