@@ -19,8 +19,8 @@ name: CI
 env:
   # The version of QT that should get built
   # This will need to match the tags used in the qt/qt5 repo minus the "v"
-  # For example this version will use source from qt/qt5 tag "v5.15.8-lts-lgpl"
-  qt_version: "5.15.8-lts-lgpl"
+  # For example this version will use source from qt/qt5 tag "v6.7.1"
+  qt_version: "6.7.1"
 
 on:
   pull_request:
