@@ -163,6 +163,7 @@ jobs:
             -skip qtnetworkauth \
             -skip qtqa \
             -skip qtquick3d \
+            -skip qtquick3dphysics \
             -skip qtquicktimeline \
             -skip qtvirtualkeyboard \
             -skip qtwayland \
