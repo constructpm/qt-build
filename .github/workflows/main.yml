@@ -25,13 +25,13 @@ env:
 on:
   pull_request:
     branches: [main]
+    # Note: This ignores if the pull request as a whole only touches MD files.
+    # If ANY commit in the PR touches something else then every push will trigger this workflow.
     paths-ignore:
       - '**/*.md'
   push:
     tags:
       - v*
-    paths-ignore:
-      - '**/*.md'
 
 jobs:
   tar-src:
