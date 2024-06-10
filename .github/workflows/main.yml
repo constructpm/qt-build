@@ -164,9 +164,11 @@ jobs:
             -skip qtqa \
             -skip qtquick3d \
             -skip qtquick3dphysics \
+            -skip qtquickeffectmaker \
             -skip qtquicktimeline \
             -skip qtspeech \
             -skip qttools \
+            -skip qttranslations \
             -skip qtvirtualkeyboard \
             -skip qtwayland \
             -skip qtwebengine \
