@@ -87,12 +87,15 @@ jobs:
             libegl1-mesa-dev \
             libfontconfig1-dev \
             libfreetype6-dev \
+            libglib2.0-dev \
             libglu1-mesa-dev \
+            libice-dev \
             libicu-dev \
             libjpeg-dev \
             libnss3-dev \
             libpng-dev \
             libpq-dev \
+            libsm-dev \
             libssl-dev \
             libudev-dev \
             libx11-dev \
@@ -102,6 +105,7 @@ jobs:
             libxcb-image0-dev \
             libxcb-keysyms1-dev \
             libxcb-randr0-dev \
+            libxcb-render0-dev \
             libxcb-render-util0-dev \
             libxcb-shape0-dev \
             libxcb-shm0-dev \
