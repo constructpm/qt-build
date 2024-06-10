@@ -166,6 +166,7 @@ jobs:
             -skip qtquick3dphysics \
             -skip qtquicktimeline \
             -skip qtspeech \
+            -skip qttools \
             -skip qtvirtualkeyboard \
             -skip qtwayland \
             -skip qtwebengine \
