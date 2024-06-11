@@ -137,7 +137,7 @@ jobs:
       - name: Configure
         run: |
           ./configure \
-            -prefix "${{ github.workspace }}/opt/qt5" \
+            -prefix "${{ github.workspace }}/opt/qt6" \
             -opensource -confirm-license \
             -c++std c++${{ matrix.config.std }} \
             -shared \
@@ -184,7 +184,7 @@ jobs:
           make install
       - name: Archive
         working-directory: ${{ github.workspace }}/opt
-        run: tar cJfv "${{ steps.config.outputs.artefact_name }}" qt5
+        run: tar cJfv "${{ steps.config.outputs.artefact_name }}" qt6
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
