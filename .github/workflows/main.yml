@@ -23,6 +23,7 @@ env:
   qt_version: "6.7.1"
 
 on:
+  # WARNING: This Repo is PUBLIC. Do NOT USE `pull_request_target`. This could allow anyone to run the github action (information taken from https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#controlling-changes-from-forks-to-workflows-in-public-repositories)
   pull_request:
     branches: [main]
     # Note: This ignores if the pull request as a whole only touches MD files.
@@ -36,7 +37,7 @@ on:
 jobs:
   tar-src:
     name: "Tar qt source"
-    runs-on: ubuntu-latest
+    runs-on: "ubuntu-latest-8-cores"
     steps:
       - id: config
         run: echo "artefact_name=qt-${{ env.qt_version }}-src.tar.gz" >> $GITHUB_OUTPUT
@@ -56,7 +57,7 @@ jobs:
 
   build:
     name: "Build ${{ matrix.config.os }}"
-    runs-on: ${{ matrix.config.os }}
+    runs-on: "ubuntu-latest-8-cores"
     strategy:
       fail-fast: false
       matrix:
@@ -178,9 +179,9 @@ jobs:
             -skip qtwebengine \
             -skip qtwebglplugin \
       - name: Build
-        run: |
-          make -j 2
-          make install
+        run: make -j 2
+      - name: Install
+        run: make install
       - name: Archive
         working-directory: ${{ github.workspace }}/opt
         run: tar cJfv "${{ steps.config.outputs.artefact_name }}" qt6
