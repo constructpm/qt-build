@@ -164,7 +164,6 @@ jobs:
             -skip qtdocgallery \
             -skip qtgraphs \
             -skip qtlottie \
-            -skip qtmultimedia \
             -skip qtnetworkauth \
             -skip qtqa \
             -skip qtquick3d \
