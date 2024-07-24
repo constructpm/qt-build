@@ -2,16 +2,6 @@
 name: CI
 
 # A note on WebEngine:
-#
-# WebEngine takes too long to compile on the actions runners, so we don't
-# include it in this build. To include it in the future
-#
-# - Add a step to checkout the WebEngine submodules
-# - Remove -skip qtwebengine
-# - Allocate a larger builder!
-#
-# Otherwise, the dependencies should already have been installed.
-#
 # Also note the licencing of QtWebEngine may not be compatible with the LGPL
 # licence (the Qt website reports it isn't, although this 5.15.8 includes an
 # LGPL licence).
@@ -127,9 +117,11 @@ jobs:
             libxkbcommon-x11-dev \
             libxrandr-dev \
             libxrender-dev \
+            libxshmfence-dev \
             libxslt-dev \
             libxss-dev \
             libxtst-dev \
+            python3-html5lib \
       - uses: actions/checkout@v4
         with:
           repository: qt/qt5
@@ -176,7 +168,6 @@ jobs:
             -skip qttranslations \
             -skip qtvirtualkeyboard \
             -skip qtwayland \
-            -skip qtwebengine \
             -skip qtwebglplugin \
       - name: Build
         run: make -j 2
