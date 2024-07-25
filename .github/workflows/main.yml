@@ -121,6 +121,7 @@ jobs:
             libxslt-dev \
             libxss-dev \
             libxtst-dev \
+            ninja-build \
             python3-html5lib \
       - uses: actions/checkout@v4
         with:
@@ -170,9 +171,9 @@ jobs:
             -skip qtwayland \
             -skip qtwebglplugin \
       - name: Build
-        run: make -j 2
+        run: cmake --build . --parallel 4
       - name: Install
-        run: make install
+        run: cmake --install .
       - name: Archive
         working-directory: ${{ github.workspace }}/opt
         run: tar cJfv "${{ steps.config.outputs.artefact_name }}" qt6
