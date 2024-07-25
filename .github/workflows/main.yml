@@ -35,7 +35,7 @@ jobs:
         with:
           repository: qt/qt5
           ref: v${{ env.qt_version }}
-          submodules: true
+          submodules: recursive
           path: qt-src
       - name: Archive
         run: tar --create --xz --file "${{ steps.config.outputs.artefact_name }}" --exclude-vcs qt-src
@@ -127,7 +127,7 @@ jobs:
         with:
           repository: qt/qt5
           ref: v${{ env.qt_version }}
-          submodules: true
+          submodules: recursive
       - name: Configure
         run: |
           ./configure \
