@@ -2,16 +2,6 @@
 name: CI
 
 # A note on WebEngine:
-#
-# WebEngine takes too long to compile on the actions runners, so we don't
-# include it in this build. To include it in the future
-#
-# - Add a step to checkout the WebEngine submodules
-# - Remove -skip qtwebengine
-# - Allocate a larger builder!
-#
-# Otherwise, the dependencies should already have been installed.
-#
 # Also note the licencing of QtWebEngine may not be compatible with the LGPL
 # licence (the Qt website reports it isn't, although this 5.15.8 includes an
 # LGPL licence).
@@ -45,7 +35,7 @@ jobs:
         with:
           repository: qt/qt5
           ref: v${{ env.qt_version }}
-          submodules: true
+          submodules: recursive
           path: qt-src
       - name: Archive
         run: tar --create --xz --file "${{ steps.config.outputs.artefact_name }}" --exclude-vcs qt-src
@@ -127,14 +117,17 @@ jobs:
             libxkbcommon-x11-dev \
             libxrandr-dev \
             libxrender-dev \
+            libxshmfence-dev \
             libxslt-dev \
             libxss-dev \
             libxtst-dev \
+            ninja-build \
+            python3-html5lib \
       - uses: actions/checkout@v4
         with:
           repository: qt/qt5
           ref: v${{ env.qt_version }}
-          submodules: true
+          submodules: recursive
       - name: Configure
         run: |
           ./configure \
@@ -176,12 +169,11 @@ jobs:
             -skip qttranslations \
             -skip qtvirtualkeyboard \
             -skip qtwayland \
-            -skip qtwebengine \
             -skip qtwebglplugin \
       - name: Build
-        run: make -j 2
+        run: cmake --build . --parallel 4
       - name: Install
-        run: make install
+        run: cmake --install .
       - name: Archive
         working-directory: ${{ github.workspace }}/opt
         run: tar cJfv "${{ steps.config.outputs.artefact_name }}" qt6
