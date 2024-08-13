@@ -150,6 +150,7 @@ jobs:
             -cups \
             -strip \
             -no-tiff \
+            -no-webengine-spellchecker \
             -skip qt3d \
             -skip qtactiveqt \
             -skip qtcharts \
